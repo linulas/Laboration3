@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de33993f390e4e2bb25a8e112e8ff1be" Name="Diagram1">
+        <EntityTypeShape EntityType="HeroModel.Abilities" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeroModel.ABILITY_TYPES" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeroModel.HasAbility" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeroModel.HERO_CLASSES" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeroModel.Heroes" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="HeroModel.ability_type" ManuallyRouted="false" />
+        <AssociationConnector Association="HeroModel.hasAbility_Ability" ManuallyRouted="false" />
+        <AssociationConnector Association="HeroModel.hasAbility_Hero" ManuallyRouted="false" />
+        <AssociationConnector Association="HeroModel.hero_class" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

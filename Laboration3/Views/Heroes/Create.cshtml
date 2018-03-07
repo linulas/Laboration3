@@ -1,0 +1,74 @@
+﻿@model Laboration3.Models.ViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Heroes</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Heroes.ElementAt(0).Hero_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Heroes.ElementAt(0).Hero_Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Heroes.ElementAt(0).Hero_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Heroes.ElementAt(0).Hero_Class, "Hero_Class", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Hero_Class", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Heroes.ElementAt(0).Hero_Class, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Heroes.ElementAt(0).Hero_PortraitLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Heroes.ElementAt(0).Hero_PortraitLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Heroes.ElementAt(0).Hero_PortraitLink, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!--Abilities-->
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Abilities.ElementAt(0).Ab_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Abilities.ElementAt(0).Ab_Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Abilities.ElementAt(0).Ab_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Abilities.ElementAt(0).Ab_Type, "Ability_Type", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Ab_Type", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Abilities.ElementAt(0).Ab_Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

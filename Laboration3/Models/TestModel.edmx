@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Abilities">
+          <Key>
+            <PropertyRef Name="Ab_Id" />
+          </Key>
+          <Property Name="Ab_Id" Type="int" Nullable="false" />
+          <Property Name="Ab_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ab_Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ABILITY_TYPES">
+          <Key>
+            <PropertyRef Name="ABTY_ID" />
+          </Key>
+          <Property Name="ABTY_ID" Type="int" Nullable="false" />
+          <Property Name="ABTY_TYPE" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Heroes.dbo.HasAbility' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="HasAbility">
+          <Key>
+            <PropertyRef Name="HasHero" />
+            <PropertyRef Name="HasAbility" />
+          </Key>
+          <Property Name="HasHero" Type="int" Nullable="false" />
+          <Property Name="HasAbility" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HERO_CLASSES">
+          <Key>
+            <PropertyRef Name="HCLASS_ID" />
+          </Key>
+          <Property Name="HCLASS_ID" Type="int" Nullable="false" />
+          <Property Name="HCLASS_TYPE" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Heroes">
+          <Key>
+            <PropertyRef Name="Hero_Id" />
+          </Key>
+          <Property Name="Hero_Id" Type="int" Nullable="false" />
+          <Property Name="Hero_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Hero_Class" Type="int" Nullable="false" />
+          <Property Name="Hero_PortraitLink" Type="varchar" MaxLength="120" />
+        </EntityType>
+        <Association Name="ability_type">
+          <End Role="ABILITY_TYPES" Type="Self.ABILITY_TYPES" Multiplicity="1" />
+          <End Role="Abilities" Type="Self.Abilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ABILITY_TYPES">
+              <PropertyRef Name="ABTY_ID" />
+            </Principal>
+            <Dependent Role="Abilities">
+              <PropertyRef Name="Ab_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hasAbility_Ability">
+          <End Role="Abilities" Type="Self.Abilities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HasAbility" Type="Self.HasAbility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abilities">
+              <PropertyRef Name="Ab_Id" />
+            </Principal>
+            <Dependent Role="HasAbility">
+              <PropertyRef Name="HasAbility" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hasAbility_Hero">
+          <End Role="Heroes" Type="Self.Heroes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HasAbility" Type="Self.HasAbility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Heroes">
+              <PropertyRef Name="Hero_Id" />
+            </Principal>
+            <Dependent Role="HasAbility">
+              <PropertyRef Name="HasHero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hero_class">
+          <End Role="HERO_CLASSES" Type="Self.HERO_CLASSES" Multiplicity="1" />
+          <End Role="Heroes" Type="Self.Heroes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HERO_CLASSES">
+              <PropertyRef Name="HCLASS_ID" />
+            </Principal>
+            <Dependent Role="Heroes">
+              <PropertyRef Name="Hero_Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestModelStoreContainer">
+          <EntitySet Name="Abilities" EntityType="Self.Abilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ABILITY_TYPES" EntityType="Self.ABILITY_TYPES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HERO_CLASSES" EntityType="Self.HERO_CLASSES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Heroes" EntityType="Self.Heroes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HasAbility" EntityType="Self.HasAbility" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HasAbility].[HasHero] AS [HasHero], 
+    [HasAbility].[HasAbility] AS [HasAbility]
+    FROM [dbo].[HasAbility] AS [HasAbility]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="ability_type" Association="Self.ability_type">
+            <End Role="ABILITY_TYPES" EntitySet="ABILITY_TYPES" />
+            <End Role="Abilities" EntitySet="Abilities" />
+          </AssociationSet>
+          <AssociationSet Name="hasAbility_Ability" Association="Self.hasAbility_Ability">
+            <End Role="Abilities" EntitySet="Abilities" />
+            <End Role="HasAbility" EntitySet="HasAbility" />
+          </AssociationSet>
+          <AssociationSet Name="hasAbility_Hero" Association="Self.hasAbility_Hero">
+            <End Role="Heroes" EntitySet="Heroes" />
+            <End Role="HasAbility" EntitySet="HasAbility" />
+          </AssociationSet>
+          <AssociationSet Name="hero_class" Association="Self.hero_class">
+            <End Role="HERO_CLASSES" EntitySet="HERO_CLASSES" />
+            <End Role="Heroes" EntitySet="Heroes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Abilities">
+          <Key>
+            <PropertyRef Name="Ab_Id" />
+          </Key>
+          <Property Name="Ab_Id" Type="Int32" Nullable="false" />
+          <Property Name="Ab_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ab_Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ABILITY_TYPES" Relationship="Self.ability_type" FromRole="Abilities" ToRole="ABILITY_TYPES" />
+          <NavigationProperty Name="Heroes" Relationship="Self.HasAbility" FromRole="Abilities" ToRole="Heroes" />
+        </EntityType>
+        <EntityType Name="ABILITY_TYPES">
+          <Key>
+            <PropertyRef Name="ABTY_ID" />
+          </Key>
+          <Property Name="ABTY_ID" Type="Int32" Nullable="false" />
+          <Property Name="ABTY_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Abilities" Relationship="Self.ability_type" FromRole="ABILITY_TYPES" ToRole="Abilities" />
+        </EntityType>
+        <EntityType Name="HERO_CLASSES">
+          <Key>
+            <PropertyRef Name="HCLASS_ID" />
+          </Key>
+          <Property Name="HCLASS_ID" Type="Int32" Nullable="false" />
+          <Property Name="HCLASS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Heroes" Relationship="Self.hero_class" FromRole="HERO_CLASSES" ToRole="Heroes" />
+        </EntityType>
+        <EntityType Name="Heroes">
+          <Key>
+            <PropertyRef Name="Hero_Id" />
+          </Key>
+          <Property Name="Hero_Id" Type="Int32" Nullable="false" />
+          <Property Name="Hero_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Hero_Class" Type="Int32" Nullable="false" />
+          <Property Name="Hero_PortraitLink" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HERO_CLASSES" Relationship="Self.hero_class" FromRole="Heroes" ToRole="HERO_CLASSES" />
+          <NavigationProperty Name="Abilities" Relationship="Self.HasAbility" FromRole="Heroes" ToRole="Abilities" />
+        </EntityType>
+        <Association Name="ability_type">
+          <End Role="ABILITY_TYPES" Type="Self.ABILITY_TYPES" Multiplicity="1" />
+          <End Role="Abilities" Type="Self.Abilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ABILITY_TYPES">
+              <PropertyRef Name="ABTY_ID" />
+            </Principal>
+            <Dependent Role="Abilities">
+              <PropertyRef Name="Ab_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hero_class">
+          <End Role="HERO_CLASSES" Type="Self.HERO_CLASSES" Multiplicity="1" />
+          <End Role="Heroes" Type="Self.Heroes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HERO_CLASSES">
+              <PropertyRef Name="HCLASS_ID" />
+            </Principal>
+            <Dependent Role="Heroes">
+              <PropertyRef Name="Hero_Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HasAbility">
+          <End Role="Abilities" Type="Self.Abilities" Multiplicity="*" />
+          <End Role="Heroes" Type="Self.Heroes" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TestEnteties" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Abilities" EntityType="Self.Abilities" />
+          <EntitySet Name="ABILITY_TYPES" EntityType="Self.ABILITY_TYPES" />
+          <EntitySet Name="HERO_CLASSES" EntityType="Self.HERO_CLASSES" />
+          <EntitySet Name="Heroes" EntityType="Self.Heroes" />
+          <AssociationSet Name="ability_type" Association="Self.ability_type">
+            <End Role="ABILITY_TYPES" EntitySet="ABILITY_TYPES" />
+            <End Role="Abilities" EntitySet="Abilities" />
+          </AssociationSet>
+          <AssociationSet Name="hero_class" Association="Self.hero_class">
+            <End Role="HERO_CLASSES" EntitySet="HERO_CLASSES" />
+            <End Role="Heroes" EntitySet="Heroes" />
+          </AssociationSet>
+          <AssociationSet Name="HasAbility" Association="Self.HasAbility">
+            <End Role="Abilities" EntitySet="Abilities" />
+            <End Role="Heroes" EntitySet="Heroes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEnteties">
+          <EntitySetMapping Name="Abilities">
+            <EntityTypeMapping TypeName="TestModel.Abilities">
+              <MappingFragment StoreEntitySet="Abilities">
+                <ScalarProperty Name="Ab_Id" ColumnName="Ab_Id" />
+                <ScalarProperty Name="Ab_Name" ColumnName="Ab_Name" />
+                <ScalarProperty Name="Ab_Type" ColumnName="Ab_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ABILITY_TYPES">
+            <EntityTypeMapping TypeName="TestModel.ABILITY_TYPES">
+              <MappingFragment StoreEntitySet="ABILITY_TYPES">
+                <ScalarProperty Name="ABTY_ID" ColumnName="ABTY_ID" />
+                <ScalarProperty Name="ABTY_TYPE" ColumnName="ABTY_TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HERO_CLASSES">
+            <EntityTypeMapping TypeName="TestModel.HERO_CLASSES">
+              <MappingFragment StoreEntitySet="HERO_CLASSES">
+                <ScalarProperty Name="HCLASS_ID" ColumnName="HCLASS_ID" />
+                <ScalarProperty Name="HCLASS_TYPE" ColumnName="HCLASS_TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Heroes">
+            <EntityTypeMapping TypeName="TestModel.Heroes">
+              <MappingFragment StoreEntitySet="Heroes">
+                <ScalarProperty Name="Hero_Id" ColumnName="Hero_Id" />
+                <ScalarProperty Name="Hero_Name" ColumnName="Hero_Name" />
+                <ScalarProperty Name="Hero_Class" ColumnName="Hero_Class" />
+                <ScalarProperty Name="Hero_PortraitLink" ColumnName="Hero_PortraitLink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="HasAbility" TypeName="TestModel.HasAbility" StoreEntitySet="HasAbility">
+            <EndProperty Name="Abilities">
+              <ScalarProperty Name="Ab_Id" ColumnName="HasAbility" />
+            </EndProperty>
+            <EndProperty Name="Heroes">
+              <ScalarProperty Name="Hero_Id" ColumnName="HasHero" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

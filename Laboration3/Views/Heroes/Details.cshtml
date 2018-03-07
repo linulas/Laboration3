@@ -1,0 +1,68 @@
+﻿@model  IEnumerable<Laboration3.Models.HasAbility>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Hero</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            <img id="heroPortrait" src="@Html.DisplayFor(model => model.ElementAt(0).Heroes.Hero_PortraitLink)" class="row" />
+        </div>
+
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Heroes.Hero_Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ElementAt(0).Heroes.Hero_Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Heroes.HERO_CLASSES.HCLASS_TYPE)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ElementAt(0).Heroes.HERO_CLASSES.HCLASS_TYPE)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+
+    <h4>Abilities</h4>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Abilities.Ab_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Abilities.ABILITY_TYPES.ABTY_TYPE)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abilities.Ab_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abilities.ABILITY_TYPES.ABTY_TYPE)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = ViewBag.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

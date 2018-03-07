@@ -1,0 +1,90 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Custom css */
+
+html,
+body {
+    background-color: #140F0B;
+}
+
+h1,
+h2,
+h4,
+p,
+a,
+table,
+dl{
+    font-family: 'Roboto', sans-serif;
+    font-weight: Lighter;
+    color: white;
+}
+
+th,
+dt{
+    color: darkorange;
+}
+
+#searchHero {
+    padding: 2px;
+}
+
+header {
+    text-align: center;
+    background-color: #1A1B1B;
+    box-shadow: 0.5px 0.5px 2px #ddd;
+    text-shadow: 0.5px 0.5px 0.5px darkorange;
+    padding: 30px
+}
+
+#heroGroupMenu {
+    padding: 50px;
+    text-align: center;
+}
+
+    #heroGroupMenu ul li {
+        display: inline;
+        list-style-type: none;
+        text-transform: uppercase;
+    }
+
+    #heroGroupMenu a {
+        font-size: 12px;
+        letter-spacing: 1px;
+        margin-left: 10px;
+        color: white;
+        text-decoration: none;
+        background-color: #140F0B;
+        padding: 10px;
+    }
+
+        #heroGroupMenu a:hover,
+        .active {
+            background-color: orange;
+        }
+
+#heroPortrait {
+    float: left;
+}

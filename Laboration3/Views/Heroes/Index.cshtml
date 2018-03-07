@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Laboration3.Models.Heroes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="heroGroupMenu">
+    <ul>
+        <li class="loud">
+            @Html.ActionLink("All", "Index", new { searchString = string.Empty })
+        </li>
+        <li class="loud">
+            @Html.ActionLink("Offense", "Index", new { searchString = "Offense" })
+        </li>
+        <li class="loud">
+            @Html.ActionLink("Defense", "Index", new { searchString = "Defense" })
+        </li>
+        <li class="loud">
+            @Html.ActionLink("Tank", "Index", new { searchString = "Tank" })
+        </li>
+        <li class="loud">
+            @Html.ActionLink("Support", "Index", new { searchString = "Support" })
+        </li>
+    </ul>
+</div>
+
+<h2>Heroes</h2>
+
+<p class="col-md-3">
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <p id="searchHero" class="col-md-3">
+            Find: @Html.TextBox("SearchString")
+            <input type="submit" name="Search" value="Search" />
+        </p>
+    }
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Hero_Name", "Index", new { sortOrder = ViewBag.SortHeroName, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Hero_Class", "Index", new { sortOrder = ViewBag.SortHeroClass, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hero_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HERO_CLASSES.HCLASS_TYPE)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Hero_Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Hero_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Hero_Id })
+            </td>
+        </tr>
+    }
+
+</table>
